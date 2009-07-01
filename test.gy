@@ -1,0 +1,32 @@
+use gy.lang;
+
+map=[[1;0;0;0;0;1];
+	 [1;1;1;0;0;1];
+	 [0;0;1;1;1;1];
+	 [1;1;1;0;0;1];
+	 [1;0;1;1;1;1];
+	 [1;0;0;0;0;1]];
+history=[];
+fn traverse(list l; int x; int y; int lev) {
+	echo "("+y+", "+x+")";
+	return if x>=0 and x<6 and y>=0 and y<6; {
+		return if not history has [y;x]; {
+			echo "Reached ("+y+", "+x+")";
+			history=history.append([y;x]);
+			return if x==0 and y==0; { echo "End of traverse"; return false; }
+			else {
+				var continue;
+				continue=true;
+				for i in [[-1;0];[1;0];[0;-1];[0;1]]; {
+					if continue; {
+						echo ""+i+continue;
+						continue=not traverse(l; x+i[0]; y+i[1];lev+1);
+					}
+				}
+				return continue;
+			}
+		} else return true;
+	} else false;
+}
+
+echo traverse(map;5;5;0);

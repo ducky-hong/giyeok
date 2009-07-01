@@ -1,0 +1,105 @@
+class gy {
+    class lang() {
+		operator infix 3 + -;
+		operator infix 2 * /;
+		operator infix 4 < > <= >= == !=;
+		operator infix 5 ~;
+		operator prefix 5 ~;
+		operator infix 6 has;
+		operator prefix 7 not !;
+		operator infix 8 and or && ||;
+		operator infix 8 := = += -= *= /=;
+		operator prefix 1 + -;
+		
+		fn +(bool int float list a; str b) str(a).__append__(b);
+		fn +(str a; bool int float str list b) a.__append__(b);
+		fn +(int float a; int float b) a.__add__(b);
+		fn +(list a; b) a.append(b);
+		fn +(list a; list b) {
+			var c;
+			c=a;
+			for i in b; c+=i;
+			return c;
+		}
+		fn +=(var a; b) a=a+b;
+		fn -(int float a; int float b) a.__sub__(b);
+		fn -=(var a; b) a=a-b;
+		fn *(int float a; int float b) a.__mul__(b);
+		fn *=(var a; b) a=a*b;
+		fn /(int float a; int float b) a.__div__(b);
+		fn /=(var a; b) a=a/b;
+		fn ~(int a; int b) range(a;b);
+		fn ~(int b) range(b);
+		fn +(int float a) a;
+		fn -(int float a) a.__neg__();
+		fn =(var a; b) { assign a b; return b; }
+		fn :=(var a; b) a=b;
+		fn <(int float a; int float b) a.__lessthan__(b);
+		fn >(int float a; int float b) a.__greaterthan__(b);
+		fn <=(int float a; int float b) a.__lessthanequal__(b);
+		fn >=(int float a; int float b) a.__greaterthanequal__(b);
+		fn ==(int float a; int float b) a.__equalto__(b);
+		fn !=(int float a; int float b) not a==b;
+		fn ==(list a; list b) {
+			var result;
+			if a.size()!=b.size(); return false;
+			result=true;
+			for i in range(a.size());
+				if a[i]!=b[i]; result=false;
+			return result;
+		}
+		fn !=(list a; list b) not a==b;
+		fn not(bool a) a.__not__();
+		fn !(bool a) a.__not__();
+		fn and(bool a; bool b) a.__and__(b);
+		fn or(bool a; bool b) a.__or__(b);
+		fn &&(bool a; bool b) a.__and__(b);
+		fn ||(bool a; bool b) a.__or__(b);
+		
+		operator prefix 9 echo;
+		fn echo(a) println(a);
+		
+		class list {
+			fn [slice idx]
+				for i in idx.list(size());
+					__at__(i);
+			fn [int idx] __at__(idx);
+			fn size() __size__();
+			fn empty() size()==0;
+			fn append(a) __append__(a);
+		}
+		fn has(list a; b) {
+			var result;
+			result=false;
+#			print(""+a+" has "+b);
+			for i in a; if i==b; result=true;
+#			echo ": "+result;
+			return result;
+		}
+		class slice {
+			p1=0; p2=0;
+			fn (int s; int e) {
+				p1=s; p2=e;
+			}
+			fn list(int s) {
+				if p2<=0; p2=s-p2;
+				return range(p1;p2);
+			}
+			fn begin() p1;
+			fn end() p2;
+		}
+		class str {
+			fn (bool a) "".__append__(a);
+			fn (int a) "".__append__(a);
+			fn (float a) "".__append__(a);
+			fn (list a) "".__append__(a);
+			fn [slice idx] __substr__(idx.begin(); idx.end());
+			fn length() __length__();
+		}
+		operator infix 5 :;
+		fn :(int a; int b) slice(a;b);
+		fn range(int s; int e; int t) while s<e; (s+=t)-t;
+		fn range(int s; int e) range(s; e; 1);
+		fn range(int e) range(0; e);
+    }
+}
