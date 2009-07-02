@@ -1,6 +1,8 @@
 enum ASTNODETYPE {
 	NODE_OPERATOR,
 	NODE_ELEMENT,
+	NODE_UNCALL,
+	NODE_BINCALL,
 	NODE_FNCALL,
 	NODE_CLASSCALL,
 	NODE_VARIABLECALL,
@@ -25,6 +27,8 @@ public:
 	Value* run(Runner* runner) {
 		return 0;
 	}
+public:
+	Operator* getOpr() { return opr; }
 protected:
 	Operator *opr;
 };
@@ -43,9 +47,13 @@ protected:
 class Nbincall : public ASTNode {
 public:
 	Nbincall(Operator *o, ASTNode* t1, ASTNode* t2) { op=o; tar1=t1; tar2=t2; }
-	virtual ASTNODETYPE getType() { return NODE_FNCALL; }
+	virtual ASTNODETYPE getType() { return NODE_BINCALL; }
 	virtual PieceType getObjType() { return PT_UNKNOWN; }
 	Value* run(Runner* runner);
+public:
+	Operator* getOpr() { return op; }
+	ASTNode* getTar1() { return tar1; }
+	ASTNode* getTar2() { return tar2; }
 protected:
 	Operator *op;
 	ASTNode *tar1, *tar2;
@@ -54,9 +62,12 @@ protected:
 class Nuncall : public ASTNode {
 public:
 	Nuncall(Operator *o, ASTNode* t1) { op=o; tar1=t1; }
-	virtual ASTNODETYPE getType() { return NODE_FNCALL; }
+	virtual ASTNODETYPE getType() { return NODE_UNCALL; }
 	virtual PieceType getObjType() { return PT_UNKNOWN; }
 	Value* run(Runner* runner);
+public:
+	Operator* getOpr() { return op; }
+	ASTNode* getTar1() { return tar1; }
 protected:
 	Operator *op;
 	ASTNode *tar1;
@@ -68,6 +79,9 @@ public:
 	virtual ASTNODETYPE getType() { return NODE_FNCALL; }
 	virtual PieceType getObjType() { return PT_UNKNOWN; }
 	Value* run(Runner* runner);
+public:
+	Efns* getFns() { return fns; }
+	Pcall* getPrms() { return prms; }
 protected:
 	Efns *fns;
 	Pcall *prms;
@@ -79,6 +93,9 @@ public:
 	virtual ASTNODETYPE getType() { return NODE_CLASSCALL; }
 	virtual PieceType getObjType() { return PT_UNKNOWN; }
 	Value* run(Runner* runner);
+public:
+	Eclass* getClass() { return clss; }
+	Pcall* getPrms() { return prms; }
 protected:
 	Eclass *clss;
 	Pcall *prms;
@@ -90,6 +107,9 @@ public:
 	virtual ASTNODETYPE getType() { return NODE_VARIABLECALL; }
 	virtual PieceType getObjType() { return PT_UNKNOWN; }
 	Value* run(Runner* runner);
+public:
+	Variable* getVar() { return var; }
+	Pcall* getPrms() { return prms; }
 protected:
 	Variable *var;
 	Pcall *prms;
@@ -101,6 +121,9 @@ public:
 	virtual ASTNODETYPE getType() { return NODE_VALUECALL; }
 	virtual PieceType getObjType() { return PT_UNKNOWN; }
 	Value* run(Runner* runner);
+public:
+	ASTNode* getVal() { return node; }
+	Pcall* getPrms() { return prms; }
 protected:
 	ASTNode *node;
 	Pcall *prms;
@@ -115,6 +138,9 @@ public:
 public:
 	void push(Runner*);
 	void pop(Runner*);
+public:
+	ASTNode* getNode() { return node; }
+	GYstring getName() { return name; }
 protected:
 	ASTNode *node;
 	GYstring name;
@@ -130,6 +156,9 @@ public:
 	virtual ASTNODETYPE getType() { return NODE_ANONYMCALL; }
 	virtual PieceType getObjType() { return PT_UNKNOWN; }
 	Value* run(Runner* runner);
+public:
+	Ndot* getObj() { return obj; }
+	Pcall* getPrms() { return prms; }
 protected:
 	Ndot *obj;
 	Pcall *prms;

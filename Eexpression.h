@@ -189,6 +189,8 @@ public:
 	Piece* clonePiece(Piece*);
 	void integration(Scope*);
 	Value* run(Runner*);
+public:
+	ASTNode* getASTnode() { return ast; }
 protected:
 	GYarray<Piece*> body;
 	ASTNode *ast;

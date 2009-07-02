@@ -18,6 +18,10 @@ public:
 	Eif* clone();
 	void integration(Scope*);
 	Value* run(Runner*);
+public:
+	Element* getCondition() { return condition; }
+	Element* getThen() { return then; }
+	Element* getElse() { return elsethen; }
 protected:
 	Element* condition;
 	Element* then;
@@ -34,6 +38,9 @@ public:
 	Ewhile* clone();
 	void integration(Scope*);
 	Value* run(Runner*);
+public:
+	Element* getCondition() { return condition; }
+	Element* getBody() { return body; }
 protected:
 	Element* condition;
 	Element* body;
@@ -46,6 +53,8 @@ public:
 		list=l;
 		body=b;
 	}
+	GYstring getVarName() { return varname; }
+	Variable* getVariable() { return variable; }
 	Element* getList() { return list; }
 	Element* getBody() { return body; }
 public:
@@ -82,6 +91,10 @@ public:
 	Eassign* clone();
 	void integration(Scope*);
 	Value* run(Runner*);				// 0À» ¹ÝÈ¯
+public:
+	GYstring getTargetName() { return targetname; }
+	Variable* getTarget() { return target; }
+	Element* getBody() { return body; }
 protected:
 	GYstring targetname;
 	Variable* target;
@@ -97,6 +110,8 @@ public:
 	Ereturn* clone();
 	void integration(Scope*);
 	Value* run(Runner*);
+public:
+	Element* getBody() { return body; }
 protected:
 	Element* body;
 };
