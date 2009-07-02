@@ -7,6 +7,7 @@
 #include "Value_basictype.h"
 #include <iostream>
 #include <sstream>
+#include <windows.h>
 
 GYstring printitem(Value* value) {
 	Vstr *vs;
@@ -44,7 +45,7 @@ GYstring printitem(Value* value) {
 Value* basicio__print__(Runner* runner, Efn* fni) {
 	Value *value;
 
-	value=fni->findVariable("a0")->getValue();
+	value=fni->findVariable("a0")->getValue()->unwrap();
 	std::cout<<printitem(value);
 	return 0;
 }
@@ -53,6 +54,54 @@ Value* basicio__println__(Runner* runner, Efn* fni) {
 	basicio__print__(runner, fni);
 	std::cout<<std::endl;
 	return 0;
+}
+
+Value* basicio__read__(Runner* runner, Efn* fni) {
+	Vstr *value;
+	GYstring next;
+
+	std::cin >> next;
+	value=new Vstr(runner);
+	value->setValue(next);
+	return value;
+}
+
+Value* basicio__readline__(Runner* runner, Efn* fni) {
+	Vstr *value;
+	char line[1024];
+
+	std::cin.getline(&line[0], 1024);
+	value=new Vstr(runner);
+	value->setValue(GYstring(line));
+	return value;
+}
+
+Value* basicio__readint__(Runner* runner, Efn* fni) {
+	Vint *value;
+	int i;
+
+	std::cin >> i;
+	value=new Vint(runner);
+	value->setValue(i);
+	return value;
+}
+
+Value* basicio__readfloat__(Runner* runner, Efn* fni) {
+	Vfloat *value;
+	float f;
+
+	std::cin >> f;
+	value=new Vfloat(runner);
+	value->setValue(f);
+	return value;
+}
+
+Value* basicio__time__(Runner* runner, Efn* fni) {
+	Vint *value;
+
+	value=new Vint(runner);
+	value->setValue(GetTickCount());
+	return value;
 }
 
 void registerBasicIOfunctions(Scope* program) {
@@ -83,5 +132,35 @@ void registerBasicIOfunctions(Scope* program) {
 	p->addType("str");
 	p->addType("list");
 	fn->setBody(basicio__println__);
+	program->registerFunction(fn);
+
+	fn=new CustomFn();
+	fn->setName("read");
+	fn->setCalltype(CT_ROUND);
+	fn->setBody(basicio__read__);
+	program->registerFunction(fn);
+
+	fn=new CustomFn();
+	fn->setName("readline");
+	fn->setCalltype(CT_ROUND);
+	fn->setBody(basicio__readline__);
+	program->registerFunction(fn);
+
+	fn=new CustomFn();
+	fn->setName("readint");
+	fn->setCalltype(CT_ROUND);
+	fn->setBody(basicio__readint__);
+	program->registerFunction(fn);
+
+	fn=new CustomFn();
+	fn->setName("readfloat");
+	fn->setCalltype(CT_ROUND);
+	fn->setBody(basicio__readfloat__);
+	program->registerFunction(fn);
+
+	fn=new CustomFn();
+	fn->setName("time");
+	fn->setCalltype(CT_ROUND);
+	fn->setBody(basicio__time__);
 	program->registerFunction(fn);
 }

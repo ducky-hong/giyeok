@@ -67,6 +67,17 @@ class gy {
 			fn size() __size__();
 			fn empty() size()==0;
 			fn append(a) __append__(a);
+			fn insert(int idx; val) __insert__(idx; val);
+			fn copy(list l) {
+				var n;
+				
+				n=[];
+				for i in l; n.append(i);
+				return n;
+			}
+			fn pop(int idx) __pop__(idx);
+			fn pop() pop(size()-1);
+			fn set(int idx; val) __set__(idx; val);
 		}
 		fn has(list a; b) {
 			var result;

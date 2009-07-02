@@ -104,6 +104,9 @@ public:
 	Value* call(CallType, GYarray<Value*>*, Runner*);
 public:
 	static Value* __append__(Runner*, Efn*);
+	static Value* __insert__(Runner*, Efn*);
+	static Value* __pop__(Runner*, Efn*);
+	static Value* __set__(Runner*, Efn*);
 	static Value* __at__(Runner*, Efn*);
 	static Value* __size__(Runner*, Efn*);
 public:

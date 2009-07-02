@@ -12,7 +12,7 @@ Tfloat::Tfloat() : BasicType("float") {
 	fn->setName("__add__");
 	p=fn->addParam();
 	p->setName("a0");
-	p->addType("int");
+	p->addType("float");
 	fn->setBody(Tfloat::__add__);
 	registerFunction(fn);
 
@@ -20,7 +20,7 @@ Tfloat::Tfloat() : BasicType("float") {
 	fn->setName("__sub__");
 	p=fn->addParam();
 	p->setName("a0");
-	p->addType("int");
+	p->addType("float");
 	fn->setBody(Tfloat::__sub__);
 	registerFunction(fn);
 
@@ -28,7 +28,7 @@ Tfloat::Tfloat() : BasicType("float") {
 	fn->setName("__mul__");
 	p=fn->addParam();
 	p->setName("a0");
-	p->addType("int");
+	p->addType("float");
 	fn->setBody(Tfloat::__mul__);
 	registerFunction(fn);
 
@@ -36,7 +36,7 @@ Tfloat::Tfloat() : BasicType("float") {
 	fn->setName("__div__");
 	p=fn->addParam();
 	p->setName("a0");
-	p->addType("int");
+	p->addType("float");
 	fn->setBody(Tfloat::__div__);
 	registerFunction(fn);
 
@@ -44,7 +44,7 @@ Tfloat::Tfloat() : BasicType("float") {
 	fn->setName("__equalto__");
 	p=fn->addParam();
 	p->setName("a0");
-	p->addType("int");
+	p->addType("float");
 	fn->setBody(Tfloat::__equalto__);
 	registerFunction(fn);
 
@@ -52,7 +52,7 @@ Tfloat::Tfloat() : BasicType("float") {
 	fn->setName("__lessthan__");
 	p=fn->addParam();
 	p->setName("a0");
-	p->addType("int");
+	p->addType("float");
 	fn->setBody(Tfloat::__lessthan__);
 	registerFunction(fn);
 
@@ -60,7 +60,7 @@ Tfloat::Tfloat() : BasicType("float") {
 	fn->setName("__greaterthan__");
 	p=fn->addParam();
 	p->setName("a0");
-	p->addType("int");
+	p->addType("float");
 	fn->setBody(Tfloat::__greaterthan__);
 	registerFunction(fn);
 

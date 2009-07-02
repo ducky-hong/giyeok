@@ -1,32 +1,88 @@
 use gy.lang;
 
+a=[1;5;2;41;23;7;5;12;74;32];
+
+echo a;
+echo a[1:5];
+
+fn factorial(int i) i*factorial(i-1);
+fn factorial(int i if i==0) 1;
+fn factorial_(int i) {
+	var c;
+	
+	c=1;
+	for j in range(1;i+1);
+		c*=j;
+	return c;
+}
+
+echo factorial(a[5]);
+echo factorial_(a[5]);
+
+fn sum(list l) l[0]+sum(l[1:0]);
+fn sum(list l if l.size()==1) l[0];
+fn sum(list l if l.empty()) 0;
+fn sum_(list l) {
+	var a;
+	
+	a=0;
+	for i in l;
+		a+=i;
+	return a;
+}
+
+echo sum(a);
+echo sum_(a);
+
+fn quicksort(list l) quicksort(for i in l[1:0]; if i<l[0]; i)+
+                [l[0]]+
+                quicksort(for i in l[1:0]; if i>=l[0]; i);
+fn quicksort(list l if l.size()<=1) l;
+fn quicksort_(list l) {
+	if l.size()<=1; return l;
+	if l.size()==2;
+		if l[0]<l[1]; return [l[0];l[1]];
+		else return [l[1];l[0]];
+	var a b;
+	a=for i in l[1:0]; if i<l[0]; i;;
+	b=for i in l[1:0]; if i>=l[0]; i;;
+	a=quicksort_(a);
+	b=quicksort_(b);
+	return a+[l[0]]+b;
+}
+
+echo quicksort(a);
+echo quicksort_(a);
+
 map=[[1;0;0;0;0;1];
 	 [1;1;1;0;0;1];
 	 [0;0;1;1;1;1];
 	 [1;1;1;0;0;1];
 	 [1;0;1;1;1;1];
 	 [1;0;0;0;0;1]];
-history=[];
-fn traverse(list l; int x; int y; int lev) {
-	echo "("+y+", "+x+")";
-	return if x>=0 and x<6 and y>=0 and y<6; {
-		return if not history has [y;x]; {
-			echo "Reached ("+y+", "+x+")";
-			history=history.append([y;x]);
-			return if x==0 and y==0; { echo "End of traverse"; return false; }
-			else {
+path=[];
+fn traverse(int x; int y) {
+	return if x>=0 and x<6 and y>=0 and y<6;
+		if map[y][x]==1; {
+			map[y].set(x; 0);
+			return if x==5 and y==5; {
+				echo "End of traverse";
+				for i in path;
+					echo "("+i[0]+", "+i[1]+")";
+				return false;
+			} else {
 				var continue;
 				continue=true;
-				for i in [[-1;0];[1;0];[0;-1];[0;1]]; {
+				for i in [[-1;0];[1;0];[0;-1];[0;1]];
 					if continue; {
-						echo ""+i+continue;
-						continue=not traverse(l; x+i[0]; y+i[1];lev+1);
+						path.append([y;x]);
+						continue=traverse(x+i[0]; y+i[1]);
+						path.pop();
 					}
-				}
 				return continue;
 			}
-		} else return true;
-	} else false;
+		} else true;
+	else true;
 }
 
-echo traverse(map;5;5;0);
+traverse(0;0);

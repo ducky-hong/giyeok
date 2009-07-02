@@ -13,7 +13,11 @@ int main(int argc, char **argv) {
 	loadLibrary();
 	if (argc<2) program=prsr->parseFile("test.gy");
 	else program=prsr->parseFile(argv[1]);
-	runner=new Runner();
-	program->run(runner);
+	if (!program) {
+		printf("File not found : %s\n", argv[1]);
+	} else {
+		runner=new Runner();
+		program->run(runner);
+	}
 	return 0;
 }
