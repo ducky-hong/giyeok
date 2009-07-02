@@ -41,6 +41,8 @@ Eblock* Parser::parseFile(GYstring filepath) {
 	program->registerClass(new Tfloat());
 	program->registerClass(new Tstr());
 	program->registerClass(new Tlist());
+	program->registerClass(new Tfn());
+	program->registerClass(new Tclass());
 	registerBasicIOfunctions(program);
 	linenum=1;
 	loadLibrary();

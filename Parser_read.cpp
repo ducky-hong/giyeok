@@ -281,7 +281,7 @@ Efn* Parser::readFunction() {
 	newtoken(); w=whattoken();
 	while (w!=T_CLOSECALLR && w!=T_CLOSECALLS && w!=T_IF) {
 		param=function->addParam();
-		if (w!=T_VAR && !tokenisidentifier())
+		if (w!=T_VAR && w!=T_FN && w!=T_CLASS && !tokenisidentifier())
 			error(ERROR_PARSING_WRONGIDENTIFIER); // identifier 조건을 만족시키지 못하므로 오류 발생
 		name=token;
 		ow=w; newtoken(); w=whattoken();
